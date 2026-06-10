@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext } from "react";
 
 export type Language = "en" | "es" | "hi";
 
@@ -255,24 +255,8 @@ interface LanguageContextValue {
   useFreeTrialEcho: () => void;
 }
 
-const LanguageContext = createContext<LanguageContextValue | null>(null);
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-  const [freeTrialEchoes, setFreeTrialEchoes] = useState(3);
-
-  const useFreeTrialEcho = () => {
-    setFreeTrialEchoes((prev) => Math.max(0, prev - 1));
-  };
-
-  const t = translations[language] as unknown as Translations;
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, freeTrialEchoes, useFreeTrialEcho }}>
-      {children}
-    </LanguageContext.Provider>
-  );
-}
+export const LanguageContext = createContext<LanguageContextValue | null>(null);
+export { translations };
 
 export function useLanguage() {
   const ctx = useContext(LanguageContext);
