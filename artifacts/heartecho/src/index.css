@@ -158,9 +158,110 @@
   }
   body {
     @apply font-sans antialiased bg-background text-foreground text-lg;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tight text-primary;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  ::selection {
+    background: rgba(245, 158, 11, 0.25);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  /* Premium container shadow system */
+  .shadow-premium {
+    box-shadow:
+      0 1px 2px rgba(15,23,42,0.04),
+      0 4px 12px rgba(15,23,42,0.06),
+      0 12px 32px rgba(15,23,42,0.08);
+  }
+  .shadow-premium-lg {
+    box-shadow:
+      0 2px 4px rgba(15,23,42,0.04),
+      0 8px 24px rgba(15,23,42,0.08),
+      0 24px 64px rgba(15,23,42,0.12);
+  }
+  .shadow-gold {
+    box-shadow:
+      0 4px 16px rgba(245,158,11,0.20),
+      0 12px 40px rgba(245,158,11,0.12);
+  }
+  .shadow-gold-sm {
+    box-shadow:
+      0 2px 8px rgba(245,158,11,0.18),
+      0 6px 20px rgba(245,158,11,0.10);
+  }
+
+  /* Premium card treatment */
+  .card-premium {
+    @apply bg-card rounded-2xl border border-border;
+    box-shadow:
+      0 1px 2px rgba(15,23,42,0.04),
+      0 4px 12px rgba(15,23,42,0.06),
+      0 12px 32px rgba(15,23,42,0.08);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .card-premium:hover {
+    box-shadow:
+      0 2px 4px rgba(15,23,42,0.05),
+      0 8px 24px rgba(15,23,42,0.09),
+      0 24px 56px rgba(15,23,42,0.12);
+    transform: translateY(-2px);
+  }
+
+  /* High-end prose improvements */
+  .prose-premium p {
+    @apply leading-relaxed text-foreground/85;
+    font-size: 1.0625rem;
+  }
+
+  /* Animated gradient text for hero accents */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #F59E0B 0%, #FCD34D 50%, #D97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-slate {
+    background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 60%, #0F172A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Focus ring — amber glow for premium feel */
+  .focus-ring-gold:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.45);
+  }
+
+  /* Responsive section padding */
+  .section-pad {
+    @apply py-20 px-6 md:px-12 lg:px-16;
+  }
+  .section-pad-sm {
+    @apply py-14 px-6 md:px-10;
+  }
+
+  /* Smooth scrollbar */
+  .scrollbar-premium {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245,158,11,0.35) transparent;
+  }
+  .scrollbar-premium::-webkit-scrollbar {
+    width: 5px;
+  }
+  .scrollbar-premium::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-premium::-webkit-scrollbar-thumb {
+    background: rgba(245,158,11,0.35);
+    border-radius: 99px;
   }
 }
 
