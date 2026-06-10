@@ -1,0 +1,281 @@
+import { createContext, useContext, useState, type ReactNode } from "react";
+
+export type Language = "en" | "es" | "hi";
+
+const translations = {
+  en: {
+    nav: {
+      home: "Home",
+      vault: "My Vault",
+      archive: "Archive",
+      family: "Family Room",
+      support: "Support Our Mission",
+    },
+    hero: {
+      headline1: "Preserve Their Voice.",
+      headline2: "Keep Their Stories Alive Forever.",
+      sub: "A beautifully simple, secure space for families to record and treasure the life stories of their elders.",
+      cta: "Start Your Digital Portrait",
+      videoCaption: "Watch how HeartEcho connects generations",
+      freeTrial: "Free Trial Echoes Remaining",
+    },
+    howItWorks: {
+      title: "How HeartEcho Works",
+      step1Title: "Setup",
+      step1Desc: "Create a secure, private memory profile. Add emergency contacts to ensure stories are preserved safely.",
+      step2Title: "Record Weekly",
+      step2Desc: "Use our beautifully simple voice recorder. Receive thoughtful prompts to inspire meaningful memories.",
+      step3Title: "Connect Forever",
+      step3Desc: "Listen, share, and connect. A lasting Voice Heritage that future generations will treasure.",
+    },
+    onboarding: {
+      stepSecurity: "Security",
+      stepRole: "Role Choice",
+      stepProfile: "Profile",
+      secureTitle: "Secure Your Legacy",
+      secureDesc: "Your account details and emergency contacts. We use a 15-30 day inactive check-in system to ensure your stories are safe.",
+      yourAccount: "Your Account",
+      fullName: "Full Name",
+      email: "Email",
+      password: "Password",
+      emergencyNominees: "Emergency Nominees",
+      nomineeDesc: "Who should we contact if your account is inactive for 15-30 days?",
+      nominee: "Nominee",
+      chooseTitle: "Choose Your Path",
+      chooseDesc: "How are you using HeartEcho today?",
+      livingElder: "Living Elder",
+      livingElderDesc: "I am setting this up for a living parent or grandparent to record stories.",
+      savingPhase: "Saving Phase",
+      ancestor: "Deceased Ancestor",
+      ancestorDesc: "I want to preserve the legacy of a deceased ancestor with photos and records.",
+      legacyPhase: "Legacy Connected Phase",
+      billingSecure: "Secure Subscription Billing",
+      profileTitle: "Memory Profile",
+      profileDesc: "Tell us about the person whose legacy we are preserving.",
+      seniorName: "Senior's Name",
+      hometown: "Hometown",
+      favoriteThings: "Favorite Things",
+      lifeMantra: "Life Mantra / Philosophy",
+      photoUpload: "Upload a Photo (Optional)",
+      photoDropLabel: "Drag a photo here or click to browse",
+      photoDropHint: "JPG, PNG or WEBP · Max 5 MB",
+      photoUploaded: "Photo uploaded",
+      continue: "Continue",
+      complete: "Complete Profile",
+      processing: "Processing...",
+    },
+    footer: {
+      tagline: "Preserving voices and stories. Creating a forever connection across generations.",
+      navigation: "Navigation",
+      legal: "Legal",
+      terms: "Terms of Service",
+      privacy: "Privacy Policy",
+      encryption: "100% Data Encryption Guarantee. Your data is never sold to third parties.",
+      rights: "HeartEcho. All rights reserved.",
+    },
+    chat: {
+      title: "Need Help?",
+      placeholder: "Type your question here...",
+      send: "Send",
+      greeting: "Hi! How can we help you today?",
+    },
+    vault: {
+      trialBadge: "Free Trial Echoes Remaining",
+    },
+  },
+  es: {
+    nav: {
+      home: "Inicio",
+      vault: "Mi Bóveda",
+      archive: "Archivo",
+      family: "Sala Familiar",
+      support: "Apoya Nuestra Misión",
+    },
+    hero: {
+      headline1: "Preserva Su Voz.",
+      headline2: "Mantén Sus Historias Vivas Para Siempre.",
+      sub: "Un espacio seguro y hermosamente simple para que las familias graben y atesoren las historias de vida de sus mayores.",
+      cta: "Comienza Tu Retrato Digital",
+      videoCaption: "Mira cómo HeartEcho conecta generaciones",
+      freeTrial: "Ecos de Prueba Gratuitos Restantes",
+    },
+    howItWorks: {
+      title: "Cómo Funciona HeartEcho",
+      step1Title: "Configuración",
+      step1Desc: "Crea un perfil de memoria seguro y privado. Agrega contactos de emergencia para asegurar que las historias se preserven.",
+      step2Title: "Graba Semanalmente",
+      step2Desc: "Usa nuestro grabador de voz sencillo y hermoso. Recibe preguntas reflexivas para inspirar recuerdos significativos.",
+      step3Title: "Conéctate Para Siempre",
+      step3Desc: "Escucha, comparte y conéctate. Una Herencia de Voz duradera que las generaciones futuras atesorarán.",
+    },
+    onboarding: {
+      stepSecurity: "Seguridad",
+      stepRole: "Elección",
+      stepProfile: "Perfil",
+      secureTitle: "Asegura Tu Legado",
+      secureDesc: "Los detalles de tu cuenta y contactos de emergencia. Usamos un sistema de 15 a 30 días para asegurarnos de que tus historias estén seguras.",
+      yourAccount: "Tu Cuenta",
+      fullName: "Nombre Completo",
+      email: "Correo Electrónico",
+      password: "Contraseña",
+      emergencyNominees: "Contactos de Emergencia",
+      nomineeDesc: "¿A quién debemos contactar si tu cuenta está inactiva por 15-30 días?",
+      nominee: "Nominado",
+      chooseTitle: "Elige Tu Camino",
+      chooseDesc: "¿Cómo usas HeartEcho hoy?",
+      livingElder: "Mayor Vivo",
+      livingElderDesc: "Lo estoy configurando para un padre o abuelo vivo que quiera grabar historias.",
+      savingPhase: "Fase de Guardado",
+      ancestor: "Ancestro Fallecido",
+      ancestorDesc: "Quiero preservar el legado de un ancestro fallecido con fotos y registros.",
+      legacyPhase: "Fase Legado Conectado",
+      billingSecure: "Pago de Suscripción Seguro",
+      profileTitle: "Perfil de Memoria",
+      profileDesc: "Cuéntanos sobre la persona cuyo legado estamos preservando.",
+      seniorName: "Nombre del Mayor",
+      hometown: "Ciudad Natal",
+      favoriteThings: "Cosas Favoritas",
+      lifeMantra: "Mantra de Vida / Filosofía",
+      photoUpload: "Subir una Foto (Opcional)",
+      photoDropLabel: "Arrastra una foto aquí o haz clic para buscar",
+      photoDropHint: "JPG, PNG o WEBP · Máx 5 MB",
+      photoUploaded: "Foto subida",
+      continue: "Continuar",
+      complete: "Completar Perfil",
+      processing: "Procesando...",
+    },
+    footer: {
+      tagline: "Preservando voces e historias. Creando una conexión eterna entre generaciones.",
+      navigation: "Navegación",
+      legal: "Legal",
+      terms: "Términos de Servicio",
+      privacy: "Política de Privacidad",
+      encryption: "Garantía de Cifrado 100%. Tus datos nunca se venden a terceros.",
+      rights: "HeartEcho. Todos los derechos reservados.",
+    },
+    chat: {
+      title: "¿Necesitas Ayuda?",
+      placeholder: "Escribe tu pregunta aquí...",
+      send: "Enviar",
+      greeting: "¡Hola! ¿Cómo podemos ayudarte hoy?",
+    },
+    vault: {
+      trialBadge: "Ecos de Prueba Gratuitos Restantes",
+    },
+  },
+  hi: {
+    nav: {
+      home: "होम",
+      vault: "मेरी तिजोरी",
+      archive: "संग्रह",
+      family: "परिवार कक्ष",
+      support: "हमारे मिशन का समर्थन करें",
+    },
+    hero: {
+      headline1: "उनकी आवाज़ सहेजें।",
+      headline2: "उनकी कहानियाँ हमेशा के लिए जीवित रखें।",
+      sub: "परिवारों के लिए एक सुंदर, सुरक्षित स्थान जहाँ आप अपने बुज़ुर्गों की जीवन कहानियाँ रिकॉर्ड और संजो सकते हैं।",
+      cta: "अपना डिजिटल चित्र शुरू करें",
+      videoCaption: "देखें कैसे HeartEcho पीढ़ियों को जोड़ता है",
+      freeTrial: "मुफ़्त परीक्षण इको शेष हैं",
+    },
+    howItWorks: {
+      title: "HeartEcho कैसे काम करता है",
+      step1Title: "सेटअप",
+      step1Desc: "एक सुरक्षित, निजी स्मृति प्रोफ़ाइल बनाएं। कहानियाँ सुरक्षित रखने के लिए आपातकालीन संपर्क जोड़ें।",
+      step2Title: "साप्ताहिक रिकॉर्ड करें",
+      step2Desc: "हमारे सरल वॉयस रिकॉर्डर का उपयोग करें। अर्थपूर्ण यादों को प्रेरित करने वाले प्रश्न प्राप्त करें।",
+      step3Title: "हमेशा के लिए जुड़ें",
+      step3Desc: "सुनें, साझा करें और जुड़ें। एक स्थायी आवाज़ विरासत जिसे भावी पीढ़ियाँ सँजोएंगी।",
+    },
+    onboarding: {
+      stepSecurity: "सुरक्षा",
+      stepRole: "भूमिका",
+      stepProfile: "प्रोफ़ाइल",
+      secureTitle: "अपनी विरासत सुरक्षित करें",
+      secureDesc: "आपके खाते की जानकारी और आपातकालीन संपर्क। हम 15-30 दिन की निष्क्रियता जाँच प्रणाली का उपयोग करते हैं।",
+      yourAccount: "आपका खाता",
+      fullName: "पूरा नाम",
+      email: "ईमेल",
+      password: "पासवर्ड",
+      emergencyNominees: "आपातकालीन नामांकित व्यक्ति",
+      nomineeDesc: "यदि आपका खाता 15-30 दिनों तक निष्क्रिय रहे तो हम किससे संपर्क करें?",
+      nominee: "नामांकित",
+      chooseTitle: "अपना मार्ग चुनें",
+      chooseDesc: "आप आज HeartEcho का उपयोग कैसे कर रहे हैं?",
+      livingElder: "जीवित बुज़ुर्ग",
+      livingElderDesc: "मैं यह एक जीवित माता-पिता या दादा-दादी के लिए सेटअप कर रहा हूँ।",
+      savingPhase: "सहेजने का चरण",
+      ancestor: "दिवंगत पूर्वज",
+      ancestorDesc: "मैं एक दिवंगत पूर्वज की विरासत फ़ोटो और रिकॉर्ड के साथ संरक्षित करना चाहता हूँ।",
+      legacyPhase: "विरासत जुड़ा चरण",
+      billingSecure: "सुरक्षित सदस्यता बिलिंग",
+      profileTitle: "स्मृति प्रोफ़ाइल",
+      profileDesc: "उस व्यक्ति के बारे में बताएं जिनकी विरासत हम संरक्षित कर रहे हैं।",
+      seniorName: "बुज़ुर्ग का नाम",
+      hometown: "जन्म स्थान",
+      favoriteThings: "पसंदीदा चीज़ें",
+      lifeMantra: "जीवन मंत्र / दर्शन",
+      photoUpload: "एक फ़ोटो अपलोड करें (वैकल्पिक)",
+      photoDropLabel: "यहाँ फ़ोटो खींचें या ब्राउज़ करने के लिए क्लिक करें",
+      photoDropHint: "JPG, PNG या WEBP · अधिकतम 5 MB",
+      photoUploaded: "फ़ोटो अपलोड हो गई",
+      continue: "जारी रखें",
+      complete: "प्रोफ़ाइल पूर्ण करें",
+      processing: "प्रोसेसिंग...",
+    },
+    footer: {
+      tagline: "आवाज़ें और कहानियाँ संरक्षित करना। पीढ़ियों के बीच एक सदैव का जुड़ाव बनाना।",
+      navigation: "नेविगेशन",
+      legal: "कानूनी",
+      terms: "सेवा की शर्तें",
+      privacy: "गोपनीयता नीति",
+      encryption: "100% डेटा एन्क्रिप्शन गारंटी। आपका डेटा कभी तीसरे पक्ष को नहीं बेचा जाता।",
+      rights: "HeartEcho. सर्वाधिकार सुरक्षित।",
+    },
+    chat: {
+      title: "मदद चाहिए?",
+      placeholder: "अपना प्रश्न यहाँ लिखें...",
+      send: "भेजें",
+      greeting: "नमस्ते! आज हम आपकी कैसे मदद कर सकते हैं?",
+    },
+    vault: {
+      trialBadge: "मुफ़्त परीक्षण इको शेष",
+    },
+  },
+} as const;
+
+export type Translations = typeof translations.en;
+
+interface LanguageContextValue {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: Translations;
+  freeTrialEchoes: number;
+  useFreeTrialEcho: () => void;
+}
+
+const LanguageContext = createContext<LanguageContextValue | null>(null);
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguage] = useState<Language>("en");
+  const [freeTrialEchoes, setFreeTrialEchoes] = useState(3);
+
+  const useFreeTrialEcho = () => {
+    setFreeTrialEchoes((prev) => Math.max(0, prev - 1));
+  };
+
+  const t = translations[language] as unknown as Translations;
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t, freeTrialEchoes, useFreeTrialEcho }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+export function useLanguage() {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
+  return ctx;
+}
