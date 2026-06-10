@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Heart, ChevronDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage, type Language } from "@/contexts/LanguageContext";
+import DonationModal from "@/components/ui/DonationModal";
 
 const LANG_LABELS: Record<Language, string> = {
   en: "EN — English",
@@ -19,6 +20,7 @@ const LANG_SHORT: Record<Language, string> = {
 export default function Navbar() {
   const { language, setLanguage, t, freeTrialEchoes } = useLanguage();
   const [langOpen, setLangOpen] = useState(false);
+  const [donationOpen, setDonationOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,6 +39,8 @@ export default function Navbar() {
   };
 
   return (
+    <>
+    <DonationModal open={donationOpen} onClose={() => setDonationOpen(false)} />
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center justify-between gap-4">
         {/* Brand */}
@@ -97,6 +101,7 @@ export default function Navbar() {
           {/* Donation button */}
           <Button
             size="lg"
+            onClick={() => setDonationOpen(true)}
             className="bg-accent text-accent-foreground hover:bg-accent/90 text-base font-semibold rounded-full px-6 shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5"
           >
             {t.nav.support}
@@ -104,5 +109,6 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+    </>
   );
 }

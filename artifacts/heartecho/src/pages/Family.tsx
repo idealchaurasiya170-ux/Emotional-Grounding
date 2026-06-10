@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetDashboardSummary, useListSessions } from "@workspace/api-client-react";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
+import DonationModal from "@/components/ui/DonationModal";
 
 const ELDER_NAME = "Dadi Margaret";
 const ELDER_AVATAR = "https://i.pravatar.cc/300?img=68";
@@ -76,6 +77,7 @@ export default function Family() {
   const { data: summary } = useGetDashboardSummary();
   const { data: sessions } = useListSessions();
 
+  const [donationOpen, setDonationOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState<{ from: "user" | "elder"; text: string }[]>([
@@ -102,6 +104,8 @@ export default function Family() {
   };
 
   return (
+    <>
+    <DonationModal open={donationOpen} onClose={() => setDonationOpen(false)} />
     <div className="max-w-7xl mx-auto py-14 px-6 space-y-14">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -322,11 +326,16 @@ export default function Family() {
           <Heart className="w-12 h-12 text-accent fill-current mb-4" />
           <h4 className="text-xl font-serif text-foreground font-bold mb-2">{t.family.supportMission}</h4>
           <p className="text-muted-foreground mb-6">{t.family.supportDesc}</p>
-          <Button variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground text-lg rounded-full">
+          <Button
+            variant="outline"
+            onClick={() => setDonationOpen(true)}
+            className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground text-lg rounded-full"
+          >
             {t.family.donate}
           </Button>
         </Card>
       </div>
     </div>
+    </>
   );
 }
