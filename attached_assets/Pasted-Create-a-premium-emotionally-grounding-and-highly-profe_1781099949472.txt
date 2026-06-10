@@ -1,0 +1,42 @@
+Create a premium, emotionally grounding, and highly professional web dashboard for a platform called 'HeartEcho' (do not use the word AI on the frontend, use terms like 'Digital Portrait' and 'Voice Heritage'). The interface must look modern, welcoming, and minimalist, designed specifically so that elderly seniors (65+) find it incredibly easy to use, while their adult children feel a deep sense of trust
+
+1. TOP NAVBAR:
+- Language Dropdown toggle (EN, ES, HI) for international users.
+- Donation Button #1 prominently styled to support server/mission costs.
+- High-end branding (Strictly NO "AI" words on the frontend; use terms like 'Digital Portrait', 'Voice Heritage', and 'Forever Connection').
+
+2. WELCOME HOME PAGE (Landing Screen):
+- A warm hero section: 'Preserve Their Voice. Keep Their Stories Alive Forever.'
+- A large video placeholder container for a 1-minute emotional animated explainer video.
+- 'How HeartEcho Works' section directly below with large text instructions for non-video users explaining setup, weekly recording, and connection.
+
+3. 3-STEP ONBOARDING & ACCOUNT SETUP FORM (With Subscription Status):
+- Step A (Security): Fields for User Name, Email, Password, and 2 Emergency Nominee Contacts (Name, Email, Phone) for the 15-30 day inactive check-in system.
+- Step B (Role Choice): Two large clickable cards: "I am setting this up for a living parent/grandparent ($3.99/mo Saving Phase)" OR "I want to preserve the legacy of a deceased ancestor ($19.99/mo Legacy Connected Phase)".
+- Step C (Memory Profile Form): Fields for Senior's Name, Hometown, Favorite Things, and core Life Mantra.
+- Visually display a "Subscription Billing Badge" (Stripe/PayPal placeholders) based on the chosen phase.
+
+4. SENIOR RECORDING VAULT (For Living Elders):
+- An extra-large, glowing circular 'Microphone' button designed for seniors (one-tap recording).
+- A card displaying a weekly storytelling question prompt.
+- 'Pre-Record for Special Days' (Time Capsule tab) to pre-record locked messages for future Birthdays, Anniversaries, and Holidays.
+- Infinite Chapters & Milestones view displaying story counts with Gold, Silver, and Bronze token/badge achievements instead of completion percentages.
+- MY SAVED ECHOES (CRUD Controls): A table listing all recorded audios, each with explicit Play (▶️), Append/Add (➕), and Delete (🗑️) control buttons.
+
+5. RETRO-FIT ARCHIVE PORTAL (For Deceased Ancestors):
+- Upload dropzones for 5-10 historical Photos and a 1-2 minute old voice snippet for cloning.
+- An extensive Historical Questionnaire form to input habits and lifestyle details.
+
+6. FAMILY LEGACY DASHBOARD (Parivar Control Room):
+- HYBRID CALLING ENGINE:
+  - Video Call Mode: Live streaming video avatar interaction showing an '80 Mins Monthly Included' badge with a prominent "Top-Up Minutes" recharge button.
+  - Audio Call Mode (Pulse Portrait): Alternative completely unlimited mode where the senior's photo subtly moves/pulses while playing cloned voice audio.
+  - Multi-User Extra Payment Rule: A clear visual badge or upgrade button for adding extended relative access/extra video call lines via additional billing.
+- A "Download Lifetime Biography E-Book & Audio Vault" premium package card for a $39 one-time purchase.
+- Donation Button #2 placed discreetly near the call summary interface.
+
+7. TRUST, SECURITY & FOOTER SYSTEMS:
+- A legal guarantee banner in the footer asserting "100% Data Encryption Guarantee. Your data is never sold to third parties." with links to Terms and Privacy Policy.
+- A floating 'Need Help?' AI Support Chatbot button at the bottom corner that pops up an instant customer service window.
+
+Design Theme: Deep respectful midnight blues for trust, soft warm cream/beige backgrounds for a cozy feel, and elegant soft gold accents for active buttons. Use extra-large, highly readable fonts across all interfaces for elderly accessibility.

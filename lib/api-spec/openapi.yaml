@@ -1,15 +1,33 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: HeartEcho API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: users
+    description: User account operations
+  - name: profiles
+    description: Senior memory profile operations
+  - name: recordings
+    description: Audio recording vault operations
+  - name: prompts
+    description: Weekly storytelling prompt operations
+  - name: timecapsules
+    description: Time capsule pre-recorded message operations
+  - name: nominees
+    description: Emergency nominee contact operations
+  - name: archive
+    description: Retro-fit archive operations for deceased ancestors
+  - name: sessions
+    description: Call session tracking
+  - name: dashboard
+    description: Dashboard summary and stats
+
 paths:
   /healthz:
     get:
@@ -24,6 +42,476 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /users/me:
+    get:
+      operationId: getMe
+      tags: [users]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /users/register:
+    post:
+      operationId: registerUser
+      tags: [users]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistration"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /users/subscription:
+    patch:
+      operationId: updateSubscription
+      tags: [users]
+      summary: Update user subscription plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscriptionUpdate"
+      responses:
+        "200":
+          description: Subscription updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /nominees:
+    get:
+      operationId: listNominees
+      tags: [nominees]
+      summary: List emergency nominees
+      responses:
+        "200":
+          description: List of nominees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Nominee"
+    post:
+      operationId: createNominee
+      tags: [nominees]
+      summary: Add an emergency nominee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NomineeInput"
+      responses:
+        "201":
+          description: Nominee created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Nominee"
+
+  /nominees/{id}:
+    delete:
+      operationId: deleteNominee
+      tags: [nominees]
+      summary: Delete a nominee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /profiles:
+    get:
+      operationId: listProfiles
+      tags: [profiles]
+      summary: List memory profiles
+      responses:
+        "200":
+          description: List of profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MemoryProfile"
+    post:
+      operationId: createProfile
+      tags: [profiles]
+      summary: Create a memory profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemoryProfileInput"
+      responses:
+        "201":
+          description: Profile created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoryProfile"
+
+  /profiles/{id}:
+    get:
+      operationId: getProfile
+      tags: [profiles]
+      summary: Get a memory profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoryProfile"
+    patch:
+      operationId: updateProfile
+      tags: [profiles]
+      summary: Update a memory profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemoryProfileUpdate"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemoryProfile"
+
+  /recordings:
+    get:
+      operationId: listRecordings
+      tags: [recordings]
+      summary: List all recordings for a profile
+      parameters:
+        - name: profileId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of recordings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Recording"
+    post:
+      operationId: createRecording
+      tags: [recordings]
+      summary: Create a new recording entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordingInput"
+      responses:
+        "201":
+          description: Recording created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recording"
+
+  /recordings/{id}:
+    get:
+      operationId: getRecording
+      tags: [recordings]
+      summary: Get a recording
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Recording
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recording"
+    patch:
+      operationId: updateRecording
+      tags: [recordings]
+      summary: Append/update a recording
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordingUpdate"
+      responses:
+        "200":
+          description: Updated recording
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recording"
+    delete:
+      operationId: deleteRecording
+      tags: [recordings]
+      summary: Delete a recording
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /timecapsules:
+    get:
+      operationId: listTimeCapsules
+      tags: [timecapsules]
+      summary: List time capsule messages
+      parameters:
+        - name: profileId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of time capsule entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimeCapsule"
+    post:
+      operationId: createTimeCapsule
+      tags: [timecapsules]
+      summary: Create a time capsule message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeCapsuleInput"
+      responses:
+        "201":
+          description: Time capsule created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeCapsule"
+
+  /timecapsules/{id}:
+    delete:
+      operationId: deleteTimeCapsule
+      tags: [timecapsules]
+      summary: Delete a time capsule
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /prompts/current:
+    get:
+      operationId: getCurrentPrompt
+      tags: [prompts]
+      summary: Get the current weekly storytelling prompt
+      responses:
+        "200":
+          description: Current prompt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoryPrompt"
+
+  /prompts:
+    get:
+      operationId: listPrompts
+      tags: [prompts]
+      summary: List all story prompts
+      responses:
+        "200":
+          description: All prompts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StoryPrompt"
+
+  /archive:
+    get:
+      operationId: listArchiveItems
+      tags: [archive]
+      summary: List ancestor archive items
+      parameters:
+        - name: profileId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Archive items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ArchiveItem"
+    post:
+      operationId: createArchiveItem
+      tags: [archive]
+      summary: Submit an archive item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArchiveItemInput"
+      responses:
+        "201":
+          description: Archive item created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArchiveItem"
+
+  /archive/questionnaire:
+    post:
+      operationId: submitQuestionnaire
+      tags: [archive]
+      summary: Submit historical questionnaire for a deceased ancestor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionnaireInput"
+      responses:
+        "201":
+          description: Questionnaire submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Questionnaire"
+
+  /sessions:
+    get:
+      operationId: listSessions
+      tags: [sessions]
+      summary: List call sessions
+      parameters:
+        - name: profileId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CallSession"
+    post:
+      operationId: createSession
+      tags: [sessions]
+      summary: Log a call session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CallSessionInput"
+      responses:
+        "201":
+          description: Session logged
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CallSession"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary stats
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /profiles/{id}/badges:
+    get:
+      operationId: getProfileBadges
+      tags: [profiles]
+      summary: Get achievement badges for a profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Profile badges
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileBadges"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +522,498 @@ components:
       required:
         - status
 
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        subscriptionPlan:
+          type: string
+          enum: [saving_phase, legacy_connected]
+        subscriptionPrice:
+          type: string
+        language:
+          type: string
+          enum: [en, es, hi]
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - email
+        - subscriptionPlan
+        - language
+        - createdAt
+
+    UserRegistration:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        language:
+          type: string
+          enum: [en, es, hi]
+      required:
+        - name
+        - email
+        - password
+        - language
+
+    SubscriptionUpdate:
+      type: object
+      properties:
+        subscriptionPlan:
+          type: string
+          enum: [saving_phase, legacy_connected]
+      required:
+        - subscriptionPlan
+
+    Nominee:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        userId:
+          type: integer
+      required:
+        - id
+        - name
+        - email
+        - phone
+        - userId
+
+    NomineeInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      required:
+        - name
+        - email
+        - phone
+
+    MemoryProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        seniorName:
+          type: string
+        hometown:
+          type: string
+        favoriteThings:
+          type: string
+        lifeMantra:
+          type: string
+        profileType:
+          type: string
+          enum: [living, ancestor]
+        photoUrl:
+          type: ["string", "null"]
+        voiceSnippetUrl:
+          type: ["string", "null"]
+        userId:
+          type: integer
+        storyCount:
+          type: integer
+        minutesUsedThisMonth:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - seniorName
+        - hometown
+        - favoriteThings
+        - lifeMantra
+        - profileType
+        - userId
+        - storyCount
+        - minutesUsedThisMonth
+        - createdAt
+
+    MemoryProfileInput:
+      type: object
+      properties:
+        seniorName:
+          type: string
+        hometown:
+          type: string
+        favoriteThings:
+          type: string
+        lifeMantra:
+          type: string
+        profileType:
+          type: string
+          enum: [living, ancestor]
+      required:
+        - seniorName
+        - hometown
+        - favoriteThings
+        - lifeMantra
+        - profileType
+
+    MemoryProfileUpdate:
+      type: object
+      properties:
+        seniorName:
+          type: string
+        hometown:
+          type: string
+        favoriteThings:
+          type: string
+        lifeMantra:
+          type: string
+        photoUrl:
+          type: string
+        voiceSnippetUrl:
+          type: string
+
+    Recording:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        durationSeconds:
+          type: integer
+        audioUrl:
+          type: ["string", "null"]
+        chapter:
+          type: string
+        promptId:
+          type: ["integer", "null"]
+        profileId:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - title
+        - durationSeconds
+        - chapter
+        - profileId
+        - createdAt
+
+    RecordingInput:
+      type: object
+      properties:
+        title:
+          type: string
+        durationSeconds:
+          type: integer
+        audioUrl:
+          type: string
+        chapter:
+          type: string
+        promptId:
+          type: integer
+        profileId:
+          type: integer
+      required:
+        - title
+        - durationSeconds
+        - chapter
+        - profileId
+
+    RecordingUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        audioUrl:
+          type: string
+        durationSeconds:
+          type: integer
+
+    TimeCapsule:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        occasion:
+          type: string
+          enum: [birthday, anniversary, holiday, custom]
+        scheduledDate:
+          type: string
+        audioUrl:
+          type: ["string", "null"]
+        isLocked:
+          type: boolean
+        profileId:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - title
+        - occasion
+        - scheduledDate
+        - isLocked
+        - profileId
+        - createdAt
+
+    TimeCapsuleInput:
+      type: object
+      properties:
+        title:
+          type: string
+        occasion:
+          type: string
+          enum: [birthday, anniversary, holiday, custom]
+        scheduledDate:
+          type: string
+        audioUrl:
+          type: string
+        profileId:
+          type: integer
+      required:
+        - title
+        - occasion
+        - scheduledDate
+        - profileId
+
+    StoryPrompt:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        category:
+          type: string
+        weekNumber:
+          type: integer
+        isActive:
+          type: boolean
+      required:
+        - id
+        - question
+        - category
+        - weekNumber
+        - isActive
+
+    ArchiveItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        itemType:
+          type: string
+          enum: [photo, voice_snippet]
+        fileUrl:
+          type: string
+        description:
+          type: ["string", "null"]
+        profileId:
+          type: integer
+        uploadedAt:
+          type: string
+      required:
+        - id
+        - itemType
+        - fileUrl
+        - profileId
+        - uploadedAt
+
+    ArchiveItemInput:
+      type: object
+      properties:
+        itemType:
+          type: string
+          enum: [photo, voice_snippet]
+        fileUrl:
+          type: string
+        description:
+          type: string
+        profileId:
+          type: integer
+      required:
+        - itemType
+        - fileUrl
+        - profileId
+
+    Questionnaire:
+      type: object
+      properties:
+        id:
+          type: integer
+        profileId:
+          type: integer
+        birthYear:
+          type: ["integer", "null"]
+        occupation:
+          type: ["string", "null"]
+        hometown:
+          type: ["string", "null"]
+        personality:
+          type: ["string", "null"]
+        favoriteFoods:
+          type: ["string", "null"]
+        traditions:
+          type: ["string", "null"]
+        lifePhilosophy:
+          type: ["string", "null"]
+        memorableStories:
+          type: ["string", "null"]
+        submittedAt:
+          type: string
+      required:
+        - id
+        - profileId
+        - submittedAt
+
+    QuestionnaireInput:
+      type: object
+      properties:
+        profileId:
+          type: integer
+        birthYear:
+          type: integer
+        occupation:
+          type: string
+        hometown:
+          type: string
+        personality:
+          type: string
+        favoriteFoods:
+          type: string
+        traditions:
+          type: string
+        lifePhilosophy:
+          type: string
+        memorableStories:
+          type: string
+      required:
+        - profileId
+
+    CallSession:
+      type: object
+      properties:
+        id:
+          type: integer
+        sessionType:
+          type: string
+          enum: [video, audio]
+        durationMinutes:
+          type: integer
+        profileId:
+          type: integer
+        startedAt:
+          type: string
+      required:
+        - id
+        - sessionType
+        - durationMinutes
+        - profileId
+        - startedAt
+
+    CallSessionInput:
+      type: object
+      properties:
+        sessionType:
+          type: string
+          enum: [video, audio]
+        durationMinutes:
+          type: integer
+        profileId:
+          type: integer
+      required:
+        - sessionType
+        - durationMinutes
+        - profileId
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalRecordings:
+          type: integer
+        totalStoriesMinutes:
+          type: integer
+        activeProfiles:
+          type: integer
+        timeCapsulesPending:
+          type: integer
+        minutesUsedThisMonth:
+          type: integer
+        minutesIncluded:
+          type: integer
+        subscriptionPlan:
+          type: string
+        recentRecordings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recording"
+      required:
+        - totalRecordings
+        - totalStoriesMinutes
+        - activeProfiles
+        - timeCapsulesPending
+        - minutesUsedThisMonth
+        - minutesIncluded
+        - subscriptionPlan
+        - recentRecordings
+
+    ProfileBadges:
+      type: object
+      properties:
+        profileId:
+          type: integer
+        goldBadges:
+          type: integer
+        silverBadges:
+          type: integer
+        bronzeBadges:
+          type: integer
+        totalStories:
+          type: integer
+        currentStreak:
+          type: integer
+        milestones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Milestone"
+      required:
+        - profileId
+        - goldBadges
+        - silverBadges
+        - bronzeBadges
+        - totalStories
+        - currentStreak
+        - milestones
+
+    Milestone:
+      type: object
+      properties:
+        label:
+          type: string
+        achievedAt:
+          type: string
+        badgeTier:
+          type: string
+          enum: [gold, silver, bronze]
+      required:
+        - label
+        - achievedAt
+        - badgeTier
