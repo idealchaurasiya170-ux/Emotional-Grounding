@@ -426,7 +426,10 @@ export default function Family() {
               <h3 className="text-2xl font-serif font-bold mb-3">{t.family.multiUser}</h3>
               <p className="text-primary-foreground/80 text-lg mb-6 leading-relaxed">{t.family.multiUserDesc}</p>
             </div>
-            <Button className="w-full bg-background text-primary hover:bg-background/90 text-lg h-13">
+            <Button
+              onClick={() => setRechargeNotice({ mins: 0, price: "$14.99/mo" })}
+              className="w-full bg-background text-primary hover:bg-background/90 text-lg h-13"
+            >
               {t.family.upgradeMulti}
             </Button>
           </CardContent>
@@ -437,7 +440,11 @@ export default function Family() {
             <h3 className="text-2xl font-serif text-primary font-bold mb-3">{t.family.lifeBio}</h3>
             <p className="text-lg text-muted-foreground mb-6">{t.family.lifeBioDesc}</p>
             <div className="flex items-center gap-6">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 h-13 rounded-full shadow-md">
+              <Button
+                size="lg"
+                onClick={() => setRechargeNotice({ mins: 0, price: "$49.99" })}
+                className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 h-13 rounded-full shadow-md"
+              >
                 <Download className="mr-2 w-5 h-5" /> {t.family.purchasePkg}
               </Button>
               <span className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">{t.family.oneTime}</span>
