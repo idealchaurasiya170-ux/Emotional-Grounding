@@ -78,6 +78,9 @@ export default function Family() {
   const { data: sessions } = useListSessions();
 
   const [donationOpen, setDonationOpen] = useState(false);
+  const [rechargeNotice, setRechargeNotice] = useState<{ mins: number; price: string } | null>(null);
+  const [videoActive, setVideoActive] = useState(false);
+  const [audioActive, setAudioActive] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState<{ from: "user" | "elder"; text: string }[]>([
@@ -106,6 +109,92 @@ export default function Family() {
   return (
     <>
     <DonationModal open={donationOpen} onClose={() => setDonationOpen(false)} />
+
+    {/* Recharge confirmation overlay */}
+    {rechargeNotice && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div className="bg-[#0F172A] border border-amber-400/40 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="w-16 h-16 rounded-2xl bg-amber-400/15 border border-amber-400/30 flex items-center justify-center mx-auto mb-5">
+            <Zap className="w-8 h-8 text-amber-400" />
+          </div>
+          <h3 className="text-2xl font-serif font-bold text-white mb-2">Confirm Recharge</h3>
+          <p className="text-white/60 text-base mb-6">
+            Add <span className="text-amber-400 font-bold">+{rechargeNotice.mins} Legacy Talk-Time Minutes</span> to your account for <span className="text-amber-400 font-bold">{rechargeNotice.price}</span>?
+          </p>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setRechargeNotice(null)}
+              className="flex-1 py-3 rounded-2xl border border-white/20 text-white/70 hover:bg-white/5 transition-all font-semibold"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                setRechargeNotice(null);
+                window.open("https://checkout.stripe.com", "_blank");
+              }}
+              className="flex-1 py-3 rounded-2xl bg-amber-400 text-[#0F172A] font-bold hover:bg-amber-300 transition-all"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Video session overlay */}
+    {videoActive && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+        <div className="bg-[#0F172A] border border-primary/30 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="relative w-20 h-20 mx-auto mb-5">
+            <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+            <div className="relative w-20 h-20 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center">
+              <Video className="w-9 h-9 text-primary" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-serif font-bold text-white mb-2">Starting Video Connect</h3>
+          <p className="text-white/60 text-base mb-6">Connecting you securely to <span className="text-white font-semibold">{ELDER_NAME}</span>…</p>
+          <button
+            onClick={() => setVideoActive(false)}
+            className="w-full py-3 rounded-2xl border border-white/20 text-white/70 hover:bg-white/5 transition-all font-semibold"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+
+    {/* Audio session overlay */}
+    {audioActive && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+        <div className="bg-[#0F172A] border border-accent/30 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="relative w-20 h-20 mx-auto mb-5">
+            <div className="absolute inset-0 rounded-full bg-accent/30 animate-ping" />
+            <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-accent">
+              <img src={ELDER_AVATAR} alt={ELDER_NAME} className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-serif font-bold text-white mb-2">Voice Heritage Active</h3>
+          <p className="text-white/60 text-base mb-2">Pulse Portrait Audio with</p>
+          <p className="text-accent font-bold text-lg mb-6">{ELDER_NAME}</p>
+          <div className="flex gap-1.5 justify-center mb-6">
+            {[...Array(7)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 rounded-full bg-accent animate-bounce"
+                style={{ height: `${16 + Math.random() * 18}px`, animationDelay: `${i * 80}ms` }}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => setAudioActive(false)}
+            className="w-full py-3 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-all font-semibold"
+          >
+            End Session
+          </button>
+        </div>
+      </div>
+    )}
     <div className="max-w-7xl mx-auto py-14 px-6 space-y-14">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -248,7 +337,10 @@ export default function Family() {
                 <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Instant Recharge</h4>
               </div>
               <div className="space-y-3">
-                <button className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/30 bg-amber-400/10 hover:bg-amber-400/20 hover:border-amber-400/50 transition-all group">
+                <button
+                  onClick={() => setRechargeNotice({ mins: 30, price: "$9.99" })}
+                  className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/30 bg-amber-400/10 hover:bg-amber-400/20 hover:border-amber-400/50 transition-all group"
+                >
                   <div className="flex items-center gap-3">
                     <span className="w-10 h-10 rounded-xl bg-amber-400/20 flex items-center justify-center text-amber-400 font-bold text-sm group-hover:scale-110 transition-transform">+30</span>
                     <div className="text-left">
@@ -259,7 +351,10 @@ export default function Family() {
                   <span className="text-lg font-bold text-amber-400">$9.99</span>
                 </button>
 
-                <button className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/50 bg-amber-400/15 hover:bg-amber-400/25 hover:border-amber-400/70 transition-all group relative overflow-hidden">
+                <button
+                  onClick={() => setRechargeNotice({ mins: 80, price: "$19.99" })}
+                  className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/50 bg-amber-400/15 hover:bg-amber-400/25 hover:border-amber-400/70 transition-all group relative overflow-hidden"
+                >
                   <div className="absolute top-2 right-14 text-[10px] font-bold text-[#0F172A] bg-amber-400 px-2 py-0.5 rounded-full">BEST VALUE</div>
                   <div className="flex items-center gap-3">
                     <span className="w-10 h-10 rounded-xl bg-amber-400/30 flex items-center justify-center text-amber-400 font-bold text-sm group-hover:scale-110 transition-transform">+80</span>
@@ -294,8 +389,8 @@ export default function Family() {
               <span className="text-xl font-bold text-foreground">{summary?.minutesUsedThisMonth ?? 45} {t.family.mins}</span>
             </div>
             <div className="flex gap-4">
-              <Button size="lg" className="flex-1 text-lg h-13 rounded-xl shadow-sm">{t.family.startVideo}</Button>
-              <Button variant="outline" size="lg" className="flex-1 text-lg h-13 rounded-xl border-accent text-accent hover:bg-accent/10">{t.family.topUp}</Button>
+              <Button size="lg" onClick={() => setVideoActive(true)} className="flex-1 text-lg h-13 rounded-xl shadow-sm">{t.family.startVideo}</Button>
+              <Button variant="outline" size="lg" onClick={() => setRechargeNotice({ mins: 30, price: "$9.99" })} className="flex-1 text-lg h-13 rounded-xl border-accent text-accent hover:bg-accent/10">{t.family.topUp}</Button>
             </div>
           </CardContent>
         </Card>
@@ -315,7 +410,7 @@ export default function Family() {
             </Badge>
           </div>
           <CardContent className="p-6 bg-card flex items-center justify-center">
-            <Button size="lg" className="w-full text-xl h-14 rounded-xl bg-primary hover:bg-primary/90 shadow-lg">
+            <Button size="lg" onClick={() => setAudioActive(true)} className="w-full text-xl h-14 rounded-xl bg-primary hover:bg-primary/90 shadow-lg">
               <Phone className="mr-3 w-6 h-6" /> {t.family.connectAudio}
             </Button>
           </CardContent>

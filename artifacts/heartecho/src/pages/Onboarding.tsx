@@ -55,8 +55,8 @@ export default function Onboarding() {
 
   const handleNext = async () => {
     if (step === 1) {
-      if (!name || !email || !password || !nominee1.name || !nominee2.name) {
-        toast({ title: "Please fill all required fields", variant: "destructive" });
+      if (!name || !email || !password) {
+        toast({ title: "Please enter your name, email and password to continue", variant: "destructive" });
         return;
       }
       setLoading(true);
