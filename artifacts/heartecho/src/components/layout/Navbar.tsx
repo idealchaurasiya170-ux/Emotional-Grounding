@@ -50,8 +50,16 @@ export default function Navbar() {
           <span className="font-serif text-2xl font-bold tracking-tight">HeartEcho</span>
         </Link>
 
-        {/* Nav links — seamless integrated tabs with gold underline */}
-        <nav className="hidden md:flex items-center gap-1 h-full">
+        {/* Nav links — deep slate pill with gold active underline */}
+        <nav
+          className="hidden md:flex items-center"
+          style={{
+            backgroundColor: "#0F172A",
+            borderRadius: "14px",
+            padding: "4px 6px",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)",
+          }}
+        >
           {[
             { href: "/", label: t.nav.home },
             { href: "/vault", label: t.nav.vault },
@@ -63,16 +71,17 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className={`relative px-5 py-2 text-base font-medium transition-colors ${
+                style={{ padding: "8px 16px" }}
+                className={`relative rounded-[10px] text-sm font-semibold tracking-wide transition-all ${
                   isActive
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "text-white bg-white/10"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
                 {label}
                 {isActive && (
                   <span
-                    className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full"
+                    className="absolute bottom-1 left-4 right-4 h-[2px] rounded-full"
                     style={{ backgroundColor: "#F59E0B" }}
                   />
                 )}

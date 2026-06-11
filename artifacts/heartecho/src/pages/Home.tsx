@@ -7,35 +7,72 @@ function GrandparentsHero() {
   return (
     <div className="w-full max-w-2xl mx-auto mb-14">
       <div
-        className="w-full overflow-hidden"
+        className="w-full aspect-[16/9] flex flex-col items-center justify-center relative overflow-hidden"
         style={{
           borderRadius: "24px",
-          boxShadow: "0 8px 48px rgba(245,158,11,0.22), 0 2px 16px rgba(15,23,42,0.18), 0 0 0 1px rgba(245,158,11,0.12)",
+          background: "radial-gradient(ellipse 80% 70% at 50% 60%, #FDE68A 0%, #FCD34D 28%, #F59E0B 55%, #D97706 78%, #92400E 100%)",
+          boxShadow: "0 8px 48px rgba(245,158,11,0.35), 0 2px 16px rgba(15,23,42,0.18), 0 0 0 1px rgba(245,158,11,0.2)",
         }}
       >
-        <img
-          src="http://googleusercontent.com/image_collection/image_retrieval/3820257529457814467"
-          alt="Grandfather and grandmother sitting together on a porch, smiling warmly while looking at an old family photograph — a moment of pure shared memory and family love"
-          className="w-full h-auto object-cover"
-          style={{ display: "block" }}
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.style.display = "none";
-            const fallback = target.nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = "flex";
-          }}
-        />
-        {/* Warm fallback if image can't load */}
+        {/* Ambient light rings */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[90%] h-[90%] rounded-full border border-white/10" />
+          <div className="absolute w-[65%] h-[65%] rounded-full border border-white/15" />
+          <div className="absolute w-[40%] h-[40%] rounded-full border border-white/20" />
+        </div>
+
+        {/* Silhouette couple illustration */}
+        <svg viewBox="0 0 480 260" className="relative z-10 w-full max-w-lg h-auto" aria-hidden="true">
+          {/* Warm glow halo */}
+          <ellipse cx="240" cy="210" rx="190" ry="40" fill="rgba(146,64,14,0.3)" />
+
+          {/* Bench */}
+          <rect x="80" y="190" width="320" height="12" rx="6" fill="#92400E" opacity="0.7" />
+          <rect x="100" y="202" width="10" height="40" rx="5" fill="#92400E" opacity="0.6" />
+          <rect x="370" y="202" width="10" height="40" rx="5" fill="#92400E" opacity="0.6" />
+
+          {/* Grandmother silhouette */}
+          <ellipse cx="170" cy="185" rx="48" ry="58" fill="#92400E" opacity="0.85" />
+          <ellipse cx="170" cy="118" rx="34" ry="38" fill="#7C3AED" opacity="0.0" />
+          <ellipse cx="170" cy="115" rx="30" ry="34" fill="#92400E" opacity="0.9" />
+          {/* hair bun */}
+          <ellipse cx="170" cy="82" rx="20" ry="14" fill="#78350F" opacity="0.95" />
+          {/* arm holding photo */}
+          <path d="M148 175 Q130 165 118 158 Q108 152 110 145 Q112 138 122 140 L155 160" fill="#92400E" opacity="0.85" />
+          {/* old photo */}
+          <rect x="95" y="136" width="38" height="30" rx="3" fill="#FEFCE8" opacity="0.9" />
+          <rect x="98" y="139" width="32" height="24" rx="2" fill="#FDE68A" opacity="0.8" />
+          <ellipse cx="114" cy="148" rx="8" ry="9" fill="#D97706" opacity="0.6" />
+
+          {/* Grandfather silhouette */}
+          <ellipse cx="310" cy="183" rx="52" ry="60" fill="#78350F" opacity="0.85" />
+          <ellipse cx="310" cy="113" rx="32" ry="36" fill="#78350F" opacity="0.9" />
+          {/* grey hair */}
+          <ellipse cx="310" cy="82" rx="28" ry="14" fill="#92400E" opacity="0.7" />
+          {/* leaning to look at photo */}
+          <path d="M280 155 Q250 148 235 145 Q220 142 218 150 Q216 158 228 162 L268 165" fill="#78350F" opacity="0.85" />
+
+          {/* Hands joined in centre */}
+          <path d="M205 178 Q240 168 275 178" stroke="#F59E0B" strokeWidth="10" strokeLinecap="round" fill="none" opacity="0.6" />
+
+          {/* Floating hearts */}
+          <circle cx="240" cy="52" r="6" fill="#EF4444" opacity="0.7" />
+          <circle cx="258" cy="36" r="4" fill="#F59E0B" opacity="0.6" />
+          <circle cx="222" cy="40" r="3" fill="#EF4444" opacity="0.5" />
+
+          {/* Soft light beams from top */}
+          <line x1="200" y1="0" x2="170" y2="80" stroke="white" strokeWidth="1.5" opacity="0.12" />
+          <line x1="240" y1="0" x2="240" y2="70" stroke="white" strokeWidth="2" opacity="0.15" />
+          <line x1="280" y1="0" x2="310" y2="80" stroke="white" strokeWidth="1.5" opacity="0.12" />
+        </svg>
+
+        {/* Caption overlay */}
         <div
-          className="w-full aspect-[16/9] bg-gradient-to-br from-amber-50 via-amber-100 to-amber-50 items-center justify-center"
-          style={{ display: "none" }}
+          className="relative z-10 mt-1 mb-5 text-center px-8"
         >
-          <div className="text-center px-8">
-            <div className="text-6xl mb-4">👴🏻👵🏻</div>
-            <p className="text-amber-800 font-serif text-xl leading-relaxed">
-              "Every story you preserve is a gift<br />that never stops giving."
-            </p>
-          </div>
+          <p className="font-serif text-lg md:text-xl text-amber-950 font-semibold leading-snug drop-shadow-sm">
+            "Every voice preserved is a gift that echoes through generations."
+          </p>
         </div>
       </div>
     </div>
