@@ -1,0 +1,20 @@
+Please completely overhaul the application's home page Hero image to feature a deeply emotional, nostalgic, and professional portrait of an elderly Western/global grandfather and grandmother together. Follow these exact details:
+
+1. MAXIMUM EMOTIONAL HERO IMAGE (COUPLE PORTRAIT):
+- In the home page Hero section, replace the old blank/placeholder image area with this highly authentic, warm portrait of an elderly grandfather and grandmother sitting together on a nostalgic porch, smiling deeply with pure joy: "http://googleusercontent.com/image_collection/image_retrieval/3820257529457814467"
+- The grandmother should be holding an old photograph, and they are both looking at it, creating a perfect loop of shared family memories.
+- Style the image beautifully with smooth rounded corners (border-radius: 24px) and an elegant glow shadow to look incredibly professional and trigger immediate family nostalgia for the global Western audience.
+
+2. SLEEK INTEGRATED NAVBAR & BANNER BACKDROP:
+- Clean up the navigation area. Remove any disconnected pill/floating dabba boxes from previous styles.
+- Integrate the main tabs (Home, My Vault, Archive, Family Room) seamlessly into a unified professional top-header banner layout. Ensure the active tab indicator is a refined gold underline.
+
+3. MINUTES RECHARGE SYSTEM & VALUE UPDATES:
+- Implement the "Legacy Talk-Time Minutes Balance" dashboard tracker and add the profitable "+30 mins ($9.99)" and "+80 mins ($19.99)" recharge flows.
+- Update the "$3.99/mo Living Elder Plan" description text to include: "Secure Voice Heritage Recording AND Unlimited AI Persona Chat Assistant Access".
+- Keep the "Record Pure Audio Blessing" feature switch active in the Vault page.
+
+4. BRAND COLOR SYSTEM:
+- Lock in the new premium emotional layout colors: Deep Slate (#0F172A), Warm Antique Cream (#FDFBF7), and Rich Amber Gold (#F59E0B).
+
+Please process this clean architectural layout update without disturbing the existing translation logic hooks.

@@ -194,7 +194,12 @@ export default function Onboarding() {
                   <RadioGroupItem value="saving_phase" id="plan-living" className="peer sr-only" />
                   <Label htmlFor="plan-living" className="flex flex-col h-full border-2 border-muted bg-card hover:bg-accent/5 hover:border-accent p-8 rounded-2xl cursor-pointer peer-data-[state=checked]:border-accent peer-data-[state=checked]:bg-accent/10 transition-all">
                     <span className="text-2xl font-serif text-primary mb-2">{t.onboarding.livingElder}</span>
-                    <span className="text-lg text-muted-foreground mb-6">{t.onboarding.livingElderDesc}</span>
+                    <span className="text-lg text-muted-foreground mb-4">{t.onboarding.livingElderDesc}</span>
+                    <ul className="text-sm text-muted-foreground space-y-1.5 mb-6">
+                      <li className="flex items-center gap-2"><span className="text-accent font-bold">✓</span> Secure Voice Heritage Recording</li>
+                      <li className="flex items-center gap-2"><span className="text-accent font-bold">✓</span> Unlimited AI Persona Chat Assistant Access</li>
+                      <li className="flex items-center gap-2"><span className="text-accent font-bold">✓</span> 80 Legacy Talk-Time Minutes/mo</li>
+                    </ul>
                     <div className="mt-auto">
                       <span className="text-3xl font-bold text-primary">$3.99</span>
                       <span className="text-lg text-muted-foreground">/mo</span>

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Phone, Video, Download, Heart, Clock, Users, Send, Mic, Sparkles } from "lucide-react";
+import { Phone, Video, Download, Heart, Clock, Users, Send, Mic, Sparkles, Zap, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetDashboardSummary, useListSessions } from "@workspace/api-client-react";
@@ -206,6 +206,74 @@ export default function Family() {
             <Send className="w-5 h-5" />
           </Button>
         </div>
+      </Card>
+
+      {/* ── LEGACY TALK-TIME MINUTES BALANCE ── */}
+      <Card className="border border-amber-200/60 bg-gradient-to-br from-[#0F172A] to-[#1E293B] shadow-xl overflow-hidden">
+        <CardContent className="p-0">
+          <div className="flex flex-col md:flex-row">
+            {/* Balance display */}
+            <div className="flex-1 px-8 py-7 border-b md:border-b-0 md:border-r border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/30 flex items-center justify-center">
+                  <Timer className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-white">Legacy Talk-Time Minutes Balance</h3>
+                  <p className="text-xs text-white/50">Resets on your billing date</p>
+                </div>
+              </div>
+              <div className="flex items-end gap-3 mb-4">
+                <span className="text-5xl font-bold text-white leading-none">
+                  {(summary?.minutesIncluded ?? 80) - (summary?.minutesUsedThisMonth ?? 45)}
+                </span>
+                <span className="text-lg text-white/50 mb-1">/ {summary?.minutesIncluded ?? 80} mins remaining</span>
+              </div>
+              {/* Progress bar */}
+              <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500 transition-all"
+                  style={{
+                    width: `${Math.max(5, (((summary?.minutesIncluded ?? 80) - (summary?.minutesUsedThisMonth ?? 45)) / (summary?.minutesIncluded ?? 80)) * 100)}%`,
+                  }}
+                />
+              </div>
+              <p className="text-xs text-white/40 mt-2">{summary?.minutesUsedThisMonth ?? 45} mins used this month</p>
+            </div>
+
+            {/* Recharge options */}
+            <div className="flex-1 px-8 py-7">
+              <div className="flex items-center gap-2 mb-5">
+                <Zap className="w-4 h-4 text-amber-400" />
+                <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Instant Recharge</h4>
+              </div>
+              <div className="space-y-3">
+                <button className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/30 bg-amber-400/10 hover:bg-amber-400/20 hover:border-amber-400/50 transition-all group">
+                  <div className="flex items-center gap-3">
+                    <span className="w-10 h-10 rounded-xl bg-amber-400/20 flex items-center justify-center text-amber-400 font-bold text-sm group-hover:scale-110 transition-transform">+30</span>
+                    <div className="text-left">
+                      <p className="text-base font-semibold text-white">+30 Minutes</p>
+                      <p className="text-xs text-white/50">Valid for 90 days</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-bold text-amber-400">$9.99</span>
+                </button>
+
+                <button className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl border border-amber-400/50 bg-amber-400/15 hover:bg-amber-400/25 hover:border-amber-400/70 transition-all group relative overflow-hidden">
+                  <div className="absolute top-2 right-14 text-[10px] font-bold text-[#0F172A] bg-amber-400 px-2 py-0.5 rounded-full">BEST VALUE</div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-10 h-10 rounded-xl bg-amber-400/30 flex items-center justify-center text-amber-400 font-bold text-sm group-hover:scale-110 transition-transform">+80</span>
+                    <div className="text-left">
+                      <p className="text-base font-semibold text-white">+80 Minutes</p>
+                      <p className="text-xs text-white/50">Valid for 180 days</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-bold text-amber-400">$19.99</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Call Modes */}
