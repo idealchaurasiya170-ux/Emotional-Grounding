@@ -1,5 +1,4 @@
-import { X, Heart, Smartphone, Building2, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { X, Heart, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DonationModalProps {
@@ -7,27 +6,8 @@ interface DonationModalProps {
   onClose: () => void;
 }
 
-const BANK_DETAILS = {
-  accountName: "HeartEcho Foundation Trust",
-  accountNumber: "4082 6119 8833 0047",
-  routingNumber: "021000021",
-  ifsc: "HDFC0001234",
-  swiftCode: "HDFCINBBXXX",
-  bankName: "HDFC Bank / JPMorgan Chase",
-};
-
-const UPI_ID = "heartecho@hdfcbank";
-
 export default function DonationModal({ open, onClose }: DonationModalProps) {
-  const [copiedField, setCopiedField] = useState<string | null>(null);
-
   if (!open) return null;
-
-  const copyToClipboard = (value: string, field: string) => {
-    navigator.clipboard.writeText(value).catch(() => {});
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
-  };
 
   return (
     <div
@@ -43,11 +23,10 @@ export default function DonationModal({ open, onClose }: DonationModalProps) {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col overflow-hidden rounded-3xl shadow-2xl border border-white/10">
+      <div className="relative w-full max-w-md flex flex-col overflow-hidden rounded-3xl shadow-2xl border border-white/10">
 
-        {/* ── HEADER — deep navy gradient ── */}
+        {/* ── HEADER ── */}
         <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] px-7 pt-7 pb-6 shrink-0">
-          {/* Close */}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white/70 hover:text-white"
@@ -56,7 +35,6 @@ export default function DonationModal({ open, onClose }: DonationModalProps) {
             <X className="w-5 h-5" />
           </button>
 
-          {/* Icon + title */}
           <div className="flex flex-col items-center text-center gap-3">
             <div className="w-16 h-16 rounded-full bg-amber-400/15 border border-amber-400/30 flex items-center justify-center shadow-lg">
               <Heart className="w-8 h-8 text-amber-400 fill-amber-400/30" />
@@ -83,108 +61,41 @@ export default function DonationModal({ open, onClose }: DonationModalProps) {
         </div>
 
         {/* ── BODY ── */}
-        <div className="bg-[#0F172A] flex-1 overflow-y-auto px-7 py-6 space-y-6">
+        <div className="bg-[#0F172A] px-7 py-7 space-y-4">
 
-          {/* ── UPI QR Section ── */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-amber-400/15 flex items-center justify-center">
-                <Smartphone className="w-4 h-4 text-amber-400" />
-              </div>
-              <h3 className="text-base font-semibold text-white">Scan UPI QR Code</h3>
-              <span className="ml-auto text-xs text-amber-400/80 font-medium bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20">Instant</span>
-            </div>
+          {/* Stripe button */}
+          <a
+            href="https://buy.stripe.com/mock_donation_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 w-full rounded-2xl px-6 py-4 text-white font-bold text-lg transition-all hover:brightness-110 hover:-translate-y-0.5 active:scale-[0.98] shadow-lg"
+            style={{ backgroundColor: "#635BFF" }}
+          >
+            <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white shrink-0" aria-hidden="true">
+              <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
+            </svg>
+            Donate via Stripe
+            <ExternalLink className="w-4 h-4 opacity-60 shrink-0" />
+          </a>
 
-            {/* QR placeholder — premium framed box */}
-            <div className="flex flex-col items-center gap-4">
-              <div className="relative w-44 h-44">
-                {/* Corner decorators */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-amber-400 rounded-tl-md" />
-                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-400 rounded-tr-md" />
-                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-amber-400 rounded-bl-md" />
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-amber-400 rounded-br-md" />
-                {/* QR grid simulation */}
-                <div className="absolute inset-3 grid grid-cols-7 grid-rows-7 gap-0.5 opacity-80">
-                  {Array.from({ length: 49 }).map((_, i) => {
-                    const corners = [0,1,2,7,8,14,6,13,42,48,47,46,41,40,35,34];
-                    const isFilled = corners.includes(i) || Math.random() > 0.5;
-                    return (
-                      <div
-                        key={i}
-                        className={`rounded-sm ${isFilled ? "bg-white" : "bg-transparent"}`}
-                      />
-                    );
-                  })}
-                </div>
-                {/* Center heart overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-9 h-9 rounded-lg bg-[#0F172A] flex items-center justify-center border border-amber-400/30">
-                    <Heart className="w-5 h-5 text-amber-400 fill-amber-400/50" />
-                  </div>
-                </div>
-              </div>
-
-              {/* UPI ID copy row */}
-              <div className="w-full flex items-center gap-2 bg-white/8 border border-white/15 rounded-xl px-4 py-2.5">
-                <span className="text-sm text-white/50 shrink-0 font-medium">UPI ID</span>
-                <span className="flex-1 text-sm font-mono text-amber-300 truncate">{UPI_ID}</span>
-                <button
-                  onClick={() => copyToClipboard(UPI_ID, "upi")}
-                  className="shrink-0 text-white/50 hover:text-amber-400 transition-colors"
-                  aria-label="Copy UPI ID"
-                >
-                  {copiedField === "upi"
-                    ? <Check className="w-4 h-4 text-green-400" />
-                    : <Copy className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Bank Transfer Section ── */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-amber-400/15 flex items-center justify-center">
-                <Building2 className="w-4 h-4 text-amber-400" />
-              </div>
-              <h3 className="text-base font-semibold text-white">Bank Transfer Details</h3>
-              <span className="ml-auto text-xs text-white/40 font-medium bg-white/8 px-2.5 py-1 rounded-full border border-white/10">1–3 days</span>
-            </div>
-
-            <div className="space-y-2.5">
-              {[
-                { label: "Account Name", value: BANK_DETAILS.accountName, field: "name" },
-                { label: "Account Number", value: BANK_DETAILS.accountNumber, field: "account" },
-                { label: "Routing / ABA", value: BANK_DETAILS.routingNumber, field: "routing" },
-                { label: "IFSC Code", value: BANK_DETAILS.ifsc, field: "ifsc" },
-                { label: "SWIFT / BIC", value: BANK_DETAILS.swiftCode, field: "swift" },
-                { label: "Bank", value: BANK_DETAILS.bankName, field: "bank" },
-              ].map(({ label, value, field }) => (
-                <div
-                  key={field}
-                  className="flex items-center justify-between gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 group"
-                >
-                  <div className="min-w-0">
-                    <p className="text-xs text-white/40 font-medium uppercase tracking-wider mb-0.5">{label}</p>
-                    <p className="text-sm font-mono text-white/90 truncate">{value}</p>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard(value, field)}
-                    className="shrink-0 text-white/30 hover:text-amber-400 transition-colors opacity-0 group-hover:opacity-100"
-                    aria-label={`Copy ${label}`}
-                  >
-                    {copiedField === field
-                      ? <Check className="w-4 h-4 text-green-400" />
-                      : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* PayPal button */}
+          <a
+            href="https://www.paypal.com/donate/mock_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 w-full rounded-2xl px-6 py-4 font-bold text-lg transition-all hover:brightness-105 hover:-translate-y-0.5 active:scale-[0.98] shadow-lg"
+            style={{ backgroundColor: "#FFC439", color: "#003087" }}
+          >
+            <svg viewBox="0 0 24 24" className="w-6 h-6 shrink-0" aria-hidden="true">
+              <path fill="#003087" d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
+            </svg>
+            Donate via PayPal
+            <ExternalLink className="w-4 h-4 opacity-50 shrink-0" />
+          </a>
 
           {/* Trust note */}
-          <p className="text-center text-xs text-white/35 leading-relaxed px-2">
-            HeartEcho Foundation Trust is a registered non-profit. All donations are used exclusively to fund free memory vaults for low-income families. Tax receipt available on request.
+          <p className="text-center text-xs text-white/35 leading-relaxed pt-1">
+            HeartEcho Foundation Trust is a registered non-profit. All donations fund free memory vaults for low-income families. Tax receipt available on request.
           </p>
         </div>
 

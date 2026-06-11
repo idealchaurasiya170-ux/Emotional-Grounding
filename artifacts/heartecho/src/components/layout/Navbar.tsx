@@ -49,12 +49,30 @@ export default function Navbar() {
           <span className="font-serif text-2xl font-bold tracking-tight">HeartEcho</span>
         </Link>
 
-        {/* Nav links */}
-        <nav className="hidden md:flex items-center gap-8 text-lg font-medium text-muted-foreground">
-          <Link href="/" className="hover:text-primary transition-colors">{t.nav.home}</Link>
-          <Link href="/vault" className="hover:text-primary transition-colors">{t.nav.vault}</Link>
-          <Link href="/archive" className="hover:text-primary transition-colors">{t.nav.archive}</Link>
-          <Link href="/family" className="hover:text-primary transition-colors">{t.nav.family}</Link>
+        {/* Nav links — premium pill container */}
+        <nav
+          className="hidden md:flex items-center gap-1"
+          style={{
+            padding: "10px 24px",
+            borderRadius: "30px",
+            backgroundColor: "#1E293B",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.12)",
+          }}
+        >
+          {[
+            { href: "/", label: t.nav.home },
+            { href: "/vault", label: t.nav.vault },
+            { href: "/archive", label: t.nav.archive },
+            { href: "/family", label: t.nav.family },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="px-4 py-1.5 rounded-full text-base font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all"
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
 
         {/* Right side */}
