@@ -9,6 +9,8 @@ import promptsRouter from "./prompts";
 import archiveRouter from "./archive";
 import sessionsRouter from "./sessions";
 import dashboardRouter from "./dashboard";
+import aiRouter from "./ai";
+import notesRouter from "./notes";
 
 const router: IRouter = Router();
 
@@ -22,5 +24,7 @@ router.use(promptsRouter);
 router.use(archiveRouter);
 router.use(sessionsRouter);
 router.use(dashboardRouter);
+router.use(aiRouter);
+router.use(notesRouter);
 
 export default router;

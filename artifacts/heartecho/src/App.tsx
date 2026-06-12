@@ -13,6 +13,8 @@ import Onboarding from "@/pages/Onboarding";
 import Vault from "@/pages/Vault";
 import Archive from "@/pages/Archive";
 import Family from "@/pages/Family";
+import AiChat from "@/pages/AiChat";
+import Notes from "@/pages/Notes";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ function Router() {
           <Route path="/vault" component={Vault} />
           <Route path="/archive" component={Archive} />
           <Route path="/family" component={Family} />
+          <Route path="/ai-chat" component={AiChat} />
+          <Route path="/notes" component={Notes} />
           <Route component={NotFound} />
         </Switch>
       </main>
