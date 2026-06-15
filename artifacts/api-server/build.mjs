@@ -118,6 +118,12 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
     `,
     },
   });
+  // Frontend files ko backend ke dist folder mein copy karna
+  const frontendDist = path.resolve(artifactDir, "../mockup-sandbox/dist");
+  const backendDist = path.resolve(artifactDir, "dist");
+  
+  cpSync(frontendDist, path.join(backendDist, "public"), { recursive: true });
+  console.log("Frontend files copied to dist/public");
 }
 
 buildAll().catch((err) => {

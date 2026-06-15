@@ -28,7 +28,7 @@ app.use(
 );
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(process.cwd(), "artifacts", "api-server", "dist")));
+app.use(express.static(path.join(process.cwd(), "artifacts", "api-server", "dist", "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
@@ -36,6 +36,6 @@ app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 app.get("*", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "artifacts", "api-server", "dist", "index.html"));
+  res.sendFile(path.join(process.cwd(), "artifacts", "api-server", "dist", "public", "index.html"));
 });
 export default app;
